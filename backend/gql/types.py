@@ -7,7 +7,7 @@ from backend.weatherapi.types import Item
 class Alert:
     title: str
     description: str
-    link: str
+    pub_date: str
     author: str
 
     @classmethod
@@ -15,6 +15,6 @@ class Alert:
         return cls(
             title=basemodel.title,
             description=basemodel.description,
-            link=basemodel.link,
+            pub_date=basemodel.pub_date,
             author=basemodel.author,
         )
