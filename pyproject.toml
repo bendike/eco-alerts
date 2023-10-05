@@ -1,0 +1,101 @@
+[tool.poetry]
+name = "eco-alert"
+version = "0.1.0"
+description = ""
+authors = ["Bendik Eger <bendik.eger@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.103.2"
+uvicorn = {extras = ["standard"], version = "^0.23.2"}
+strawberry-graphql = "^0.209.5"
+requests = "^2.31.0"
+lxml = "^4.9.3"
+pydantic-xml = "^2.2.3"
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.5.1"
+ruff = "^0.0.292"
+lxml-stubs = "^0.4.0"
+types-requests = "^2.31.0.8"
+black = "^23.9.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+#
+# Linters
+#
+
+[tool.black]
+include = '\.pyi?$'
+extend-exclude = 'migrations'
+safe = true
+line-length = 88
+
+[tool.ruff]
+exclude = [
+    ".git",
+    "terraform",
+    ".venv",
+    "__pycache__",
+    "migrations",
+    "node_modules",
+]
+select = [
+    # Regular flake8 rules
+    "C", "E", "F", "W",
+    # flake8-bugbear rules
+    "B",
+    # Import sorting rules (isort replacement)
+    "I",
+    # Pylint rules
+    "PLC", "PLE", "PLR", "PLW",
+    # Do not include small Ruff rules (including useless noqa) yet
+    # "RUF",
+]
+ignore = [
+    # Disable magic value comparison. They're perfectly valid in tests and quite a few
+    # other places in the codebase. It would just be annoying to refactor.
+    "PLR2004",
+
+    # Disable complexity/refactoring checks. The usefulness of those is situational and
+    # it is best to trigger them in groups and individually and see the effects.  A lot
+    # of code we have does need some serious refactoring and those checks will highlight
+    # it, but some of them will seem like arbitrary restrictions.
+
+    # Disable C901 complexity checks. Flake8-based, related to pylint ones below
+    "C901",
+    # (Not implemented yet) Disable PLR0901 too-many-ancestors
+    #"PLR0901",
+    # (Not implemented yet) Disable PLR0902 too-many-instance-attributes
+    #"PLR0902",
+    # (Not implemented yet) Disable PLR0903 too-few-public-methods
+    # "PLR0903",
+    # (Not implemented yet) Disable PLR0904 too-many-public-methods
+    # "PLR0904",
+    #  Disable PLR0911 too-many-return-statements
+    "PLR0911",
+    # Disable PLR0912 too-many-branches
+    "PLR0912",
+    # Disable max arguments check. We should consider disabling it for just for tests.
+    # and refactoring the rest. Pytest fixtures and mocking make test signatures larger.
+    "PLR0913",
+    # (Not implemented yet) Disable PLR0914 too-many-locals
+    # "PLR0914",
+    #  Disable PLR0915 too-many-statements
+    "PLR0915",
+    # (Not implemented yet) Disable PLR0916 too-many-boolean-expressions
+    # "PLR0916",
+    # (Not implemented yet) Disable PLR1702 too-many-nested-blocks
+    #"PLR1702",
+]
+
+[tool.ruff.flake8-tidy-imports]
+ban-relative-imports = "parents"
+
+[tool.ruff.isort]
+combine-as-imports = true
+
