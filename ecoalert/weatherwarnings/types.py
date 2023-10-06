@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class Item(BaseModel):
+class WeatherWarning(BaseModel):
     title: str
     description: str
     pubDate: str

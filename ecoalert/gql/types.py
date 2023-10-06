@@ -4,8 +4,8 @@ from enum import Enum
 
 import strawberry
 
-from backend.earthquakes.types import EarthQuakeFeatures
-from backend.weatherapi.types import Item
+from ecoalert.earthquakes.types import EarthQuakeFeatures
+from ecoalert.weatherwarnings.types import WeatherWarning
 
 ##############
 # weatherapi #
@@ -13,14 +13,14 @@ from backend.weatherapi.types import Item
 
 
 @strawberry.type
-class Alert:
+class Warning:
     title: str
     description: str
     pub_date: str
     author: str
 
     @classmethod
-    def from_basemodel(cls, basemodel: Item):
+    def from_basemodel(cls, basemodel: WeatherWarning):
         return cls(
             title=basemodel.title,
             description=basemodel.description,

@@ -2,7 +2,7 @@ import json
 
 import requests
 
-from backend.earthquakes.types import EarthQuakeFeatures
+from ecoalert.earthquakes.types import EarthQuakeFeatures
 
 
 def get_earth_quakes_features() -> list[EarthQuakeFeatures]:

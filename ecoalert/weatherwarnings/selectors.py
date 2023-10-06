@@ -3,13 +3,13 @@ from io import StringIO
 import requests
 from lxml import etree
 
-from backend.weatherapi.types import Item
+from .types import WeatherWarning
 
 
-def get_items(
+def get_warnings(
     county: str | None = None,
     event: str | None = None,
-) -> list[Item]:
+) -> list[WeatherWarning]:
     EXTERNAL_API_URL = _build_url(county, event)
 
     # Use requests to deal with https
@@ -22,7 +22,7 @@ def get_items(
 
     items = list(tree.getroot().iter("item"))
 
-    return [Item.from_element(element=item) for item in items]
+    return [WeatherWarning.from_element(element=item) for item in items]
 
 
 def _build_search_params(county: str | None, event: str | None) -> str:
