@@ -27,12 +27,12 @@ async def get_warnings(
 
 
 def _build_search_params(county: str | None, event: str | None) -> str:
-    params = []
+    params = ["lang=en"]
     if county:
         params.append(f"county={county}")
     if event:
         params.append(f"event={event}")
-    return "?" + "&".join(params) if params else ""
+    return "?" + "&".join(params)
 
 
 def _build_url(county: str | None, event: str | None) -> str:
