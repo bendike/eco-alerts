@@ -2,6 +2,7 @@ from datetime import datetime
 from decimal import Decimal
 from enum import Enum
 
+import dateparser
 import strawberry
 
 from ecoalert.earthquakes.types import EarthQuakeFeatures
@@ -16,7 +17,7 @@ from ecoalert.weatherwarnings.types import WeatherWarning
 class Warning:
     title: str
     description: str
-    pub_date: str
+    pub_date: datetime
     author: str
 
     @classmethod
@@ -24,7 +25,7 @@ class Warning:
         return cls(
             title=basemodel.title,
             description=basemodel.description,
-            pub_date=basemodel.pub_date,
+            pub_date=dateparser.parse(basemodel.pub_date),
             author=basemodel.author,
         )
 
