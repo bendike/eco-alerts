@@ -15,9 +15,6 @@ async def get_weather_warnings(
     return [Warning.from_basemodel(item) for item in items]
 
 
-async def get_earthquakes(
-    county: County | None = None,
-    event: EventType | None = None,
-) -> list[EarthQuake]:
+async def get_earthquakes() -> list[EarthQuake]:
     features = await get_earth_quakes_features()
     return [EarthQuake.from_basemodel(feature) for feature in features]
