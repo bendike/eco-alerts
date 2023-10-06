@@ -6,8 +6,11 @@ from lxml import etree
 from backend.weatherapi.types import Item
 
 
-def get_items() -> list[Item]:
-    EXTERNAL_API_URL = "https://api.met.no/weatherapi/metalerts/1.1/"
+def get_items(
+    county: str | None = None,
+    event: str | None = None,
+) -> list[Item]:
+    EXTERNAL_API_URL = _build_url(county, event)
 
     # Use requests to deal with https
     response = requests.get(EXTERNAL_API_URL)
@@ -20,3 +23,19 @@ def get_items() -> list[Item]:
     items = list(tree.getroot().iter("item"))
 
     return [Item.from_element(element=item) for item in items]
+
+
+def _build_search_params(county: str | None, event: str | None) -> str:
+    params = []
+    if county:
+        params.append(f"county={county}")
+    if event:
+        params.append(f"event={event}")
+    return "?" + "&".join(params) if params else ""
+
+
+def _build_url(county: str | None, event: str | None) -> str:
+    return "https://api.met.no/weatherapi/metalerts/1.1/" + _build_search_params(
+        county,
+        event,
+    )
