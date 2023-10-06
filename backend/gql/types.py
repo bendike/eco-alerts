@@ -1,7 +1,10 @@
+from datetime import datetime
+from decimal import Decimal
 from enum import Enum
 
 import strawberry
 
+from backend.earthquakes.types import EarthQuakeFeatures
 from backend.weatherapi.types import Item
 
 ##############
@@ -57,3 +60,21 @@ class EventType(Enum):
     WIND = "wind"
 
 
+##############
+# earthquakes #
+##############
+
+
+@strawberry.type
+class EarthQuake:
+    magnitude: Decimal
+    place: str
+    time: datetime
+
+    @classmethod
+    def from_basemodel(cls, basemodel: EarthQuakeFeatures):
+        return cls(
+            magnitude=basemodel.mag,
+            place=basemodel.place,
+            time=basemodel.time,
+        )
